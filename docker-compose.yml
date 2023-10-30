@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: api_grapefruit_nginx
+    build: ./docker/nginx
+    networks:
+      - api
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - ./docker/storage/logs/:/var/log/nginx
+      - ./app/:/var/www/api.grapefruit
+    links:
+      - php_fpm
+    command: [nginx-debug, '-g', 'daemon off;']
+
+  php_fpm:
+    container_name: api_grapefruit_php_fpm
+    build: ./docker/php
+    networks:
+      - api
+      - external_network
+    volumes:
+      - ./app/:/var/www/api.grapefruit
+    expose:
+      - 9000
+
+  mysql:
+    build: ./docker/mysql/
+    container_name: api_grapefruit_mysql
+    restart: always
+    networks:
+      - api
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3310:3306"
+
+  portainer:
+    image: portainer/portainer
+    container_name: grapefruit_portainer
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9000:9000"
+
+networks:
+  api:
+  external_network:
+    external:
+      name: external_network
+
+volumes:
+  api-grapefruit:
+  mysql-data:
+  portainer_data:
