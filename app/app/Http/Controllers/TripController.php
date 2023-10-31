@@ -55,22 +55,6 @@ class TripController extends Controller
         return new Response($this->tripService->getTripBySlug($slug));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Trip $trip)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Trip $trip)
-    {
-        //
-    }
-
     private function requestToTripDTO(Request $request): TripDTO
     {
         return new TripDTO(

@@ -10,17 +10,7 @@ use Illuminate\Http\Response;
 
 class BookingController extends Controller
 {
-    public function __construct(private readonly BookingService $bookingService)
-    {
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    public function __construct(private readonly BookingService $bookingService){}
 
     /**
      * Store a newly created resource in storage.
@@ -35,29 +25,5 @@ class BookingController extends Controller
                 $exception->getCode()
             );
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Booking $booking)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Booking $booking)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Booking $booking)
-    {
-        //
     }
 }
